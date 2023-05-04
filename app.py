@@ -1,8 +1,13 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 import speedtest
 import time
 
 app = Flask(__name__)
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @app.route('/speedtest')
 def measure_speed():
