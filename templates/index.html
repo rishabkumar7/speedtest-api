@@ -28,12 +28,27 @@
         button:hover {
             background-color: #3e8e41;
         }
+        .loader {
+            display: none;
+            margin: 0 auto;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
+    <script>
+        function showLoader() {
+            document.getElementById("loader").style.display = "block";
+        }
+    </script>
 </head>
 <body>
     <h1>Speedtest API</h1>
     <div style="text-align: center;">
-        <button onclick="location.href='/speedtest';">Run Speedtest</button>
+        <button onclick="showLoader(); location.href='/speedtest';">Run Speedtest</button>
+        <img src="{{ url_for('static', filename='duck-running.gif') }}" class="loader" id="loader">
     </div>
 </body>
 </html>
