@@ -31,24 +31,40 @@
         .loader {
             display: none;
             margin: 0 auto;
-            animation: spin 2s linear infinite;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .results {
+            display: none;
+            margin-top: 50px;
         }
     </style>
     <script>
         function showLoader() {
             document.getElementById("loader").style.display = "block";
+            document.getElementById("results").style.display = "none";
+        }
+        function showResults() {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("results").style.display = "block";
         }
     </script>
 </head>
 <body>
     <h1>Speedtest API</h1>
     <div style="text-align: center;">
-        <button onclick="showLoader(); location.href='/speedtest';">Run Speedtest</button>
+        <button onclick="showLoader(); loadResults();">Run Speedtest</button>
         <img src="{{ url_for('static', filename='duck-running.gif') }}" class="loader" id="loader">
+        <div class="results" id="results"></div>
     </div>
+    <script>
+        function loadResults() {
+            fetch('/speedtest')
+            .then(response => response.json())
+            .then(data => {
+                var resultsDiv = document.getElementById("results");
+                resultsDiv.innerHTML = "<p>Download speed: " + data.download_speed + " Mbps</p><p>Upload speed: " + data.upload_speed + " Mbps</p>";
+                showResults();
+            });
+        }
+    </script>
 </body>
 </html>
