@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, request
 import speedtest
 import time
 
@@ -8,6 +8,10 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/myip')
+def get_my_ip():
+    return jsonify({'ip': request.remote_addr}), 200
 
 @app.route('/speedtest')
 def measure_speed():
